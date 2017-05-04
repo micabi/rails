@@ -1,0 +1,28 @@
+@charset "utf-8";
+
+header{
+	width: 100%;
+}
+
+header h1{
+	text-align: center;
+}
+
+#content section{
+	width: 80%;
+	margin: 0 auto;
+	border: 1px solid #aaa;
+	border-radius: 10px;
+}
+
+#content section + section{
+	margin-top: 20px;
+}
+
+footer{
+	margin-top: 20px;
+}
+
+footer p{
+	text-align: center;
+}

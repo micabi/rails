@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<!--[if lt IE7 ]><html class="ie6" lang="ja"><![endif]-->
+<!--[if IE7 ]><html class="ie7" lang="ja"><![endif]-->
+<!--[if IE8 ]><!html class="ie8" lang="ja"><![endif]-->
+<!--[if IE9 ]><!html class="ie9" lang="ja"><![endif]-->
+<!--[if (gt IE9)!(IE)]><!--><html lang="ja"><!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>VagrantでRuby on Rails導入まで</title>
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="cache-control" content="no-cache" />
+	<meta http-equiv="expires" content="0" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+	<link rel="stylesheet" href="css/style.css" />
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+	<!--[if lt IE9]>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js/></script>
+	<![endif]-->
+</head>
+<body>
+<div id="wrapper">
+	<header>
+		<h1>VagrantでRuby on Rails導入まで</h1>
+	</header>
+	<div id="content">
+		<section>
+			<div class="container">
+				<h2>概要</h2>
+				<p>Windows7(32bit)にVagrantとVertualBoxをインストールして仮想マシンを用意し、そこにRubyとrailsを入れる。</p>
+				<dl>
+					<dd>CentOSの中身を最新の環境にし、Rubyを入れる準備をする</dd>
+					<dd>Rubyのバージョン管理をするrbenvを入れる</dd>
+					<dd>Rubyを入れるためのrbenvプラグインruby-buildを入れる</dd>
+					<dd>Rubyを入れる</dd>
+					<dd>railsを入れる</dd>
+					<dd>Rubyのライブラリ管理ツールBundlerを入れる</dd>
+					<dd>アプリ作成のためのディレクトリを作成</dd>
+					<dd>Vagrantの共有フォルダを設定</dd>
+					<dd>railsサーバーを立ち上げる</dd>
+				</dl>
+			</div><!-- .container -->
+		</section>
+		<section>
+			<div class="container">
+				<h3>CentOSの中身を最新の環境にし、Rubyを入れる準備をする</h3>
+				<p>vagrant initしたフォルダ（ex: centOS）に入り、vagrant upする (Vagrantfileと.vagrantフォルダが入ったフォルダ)</p>
+				<p>vagrant sshでゲストOSに入る。</p>
+				<p>sudo yum update (centOSをアップデートする)10分くらいかかる</p>
+				<p>sudo yum -y install git gcc make openssl-devel zlib-devel readline* gcc-c++ (Rubyインストールに必要なものを入れる)</p>
+				<p>sudo yum -y install sqlite-devel (SqlLiteを入れる)</p>
+			</div><!-- .container -->
+		</section>
+		<section>
+			<div class="container">
+				<h3>Rubyのバージョン管理をするrbenvを入れる</h3>
+				<p>git clone https://github.com/sstephenson/rbenv.git ~/.rbenv</p>
+				<p>echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile</p>
+				<p>(rbenvコマンドを利用できるように、環境変数 $PATH に ~/.rbenv/bin を追加。 ~/.bash_profile に export PATH の行を追記)</p>
+				<p>echo 'eval "$(rbenv init -)"' >> ~/.bash_profile</p>
+				<p>(ターミナル起動時に “rbenv init” を実行するように、.bash_profile に実行コマンドを追記)</p>
+			</div><!-- .container -->
+		</section>
+		<section>
+			<div class="container">
+				<h3>Rubyを入れるためのrbenvプラグインruby-buildを入れる</h3>
+				<p>git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build</p>
+				<p>source ~/.bash_profile (.bash_profileを即時有効化)</p>
+				<p>rbenv --version (rbenvのバージョンを確認)</p>
+				<p>rbenv install -l (インストールできるRubyのバージョンを確認)</p>
+			</div><!-- .container -->
+		</section>
+		<section>
+			<div class="container">
+				<h3>Rubyを入れる</h3>
+				<p>rbenv install -v 2.3.1 (10分くらいかかる)</p>
+				<p>rbenv rehash</p>
+				<p>rbenv global 2.3.1</p>
+				<p>ruby -v (バージョン確認)</p>
+			</div><!-- .container -->
+		</section>
+		<section>
+			<div class="container">
+				<h3>railsを入れる</h3>
+				<p>gem install rails (10分くらいかかる)</p>
+				<p>rails -v (バージョン確認)</p>
+			</div><!-- .container -->
+		</section>
+		<section>
+			<div class="container">
+				<h3>Rubyのライブラリ管理ツールBundlerを入れる</h3>
+				<p>gem install bundler</p>
+				<p>gemでインストールするツールやバージョンをGemfileをもとに管理してくれる</p>
+			</div><!-- .container -->
+		</section>
+		<section>
+			<div class="container">
+				<h3>アプリ作成のためのディレクトリを作成</h3>
+				<p>pwdが/home/vagrantの場所で、</p>
+				<p>mkdir makeapp (作成)</p>
+				<p>cd makeapp (移動)</p>
+				<p>rails new my_app (アプリ生成)</p>
+				<p>rails generate controller home top (トップページのコントローラーを生成)</p>
+				<p>exit (vagrant sshからいったん出る)</p>
+			</div><!-- .container -->
+		</section>
+		<section>
+			<div class="container">
+				<h3>Vagrantの共有フォルダを設定 ※1</h3>
+				<p>vagrant initしたフォルダ（ex: centOS）に入る</p>
+				<p>空のフォルダ makeappを作成しておく</p>
+				<p>vi Vagrantfile (編集)</p>
+				<p>config.vm.synced_folder "../centOS/makeapp", "/home/vagrant/makeapp"</p>
+				<p>vagrant reload</p>
+			</div><!-- .container -->
+		</section>
+		<section>
+			<div class="container">
+				<h3>railsサーバーを立ち上げる</h3>
+				<p>vagrant ssh</p>
+				<p>cd makeapp (移動)</p>
+				<p>cd my_app (移動)</p>
+				<p>rails server (起動) ※2</p>
+				<p>ブラウザでhttp://192.168.33.10:3000/home/topにアクセス</p>
+			</div><!-- .container -->
+		</section>
+		<section>
+			<div class="container">
+				<h3>※ 共有が上手くいかない場合</h3>
+				<p>Vagrant was unable to mount VirtualBox shared folders....とエラーが出る</p>
+				<p>原因はホスト(VirtualBox)とゲスト(Guest Additions)でバージョン不一致</p>
+				<p>バージョンを更新してくれるプラグインを入れてみる</p>
+				<p>まずvagrant sshしてゲストOSに入る</p>
+				<p>vagrant plugin install vagrant-vbguest</p>
+				<p>vagrant vbguest --status (確認)</p>
+				<p>vagrant vbguest (更新)</p>
+				<p>それでもダメならVirtualBoxを最新版に更新してみる</p>
+			</div><!-- .container -->
+		</section>
+	</div><!-- #content -->
+	<footer>
+		<p>Copyrights&copy; 2017 Wataru Adachi All Right Reserved.</p>
+	</footer>
+</div><!-- #wrapper -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -131,15 +131,21 @@
 		</section>
 		<section>
 			<div class="container">
-				<h3>※ 共有が上手くいかない場合</h3>
+				<h3>※1 共有が上手くいかない場合</h3>
 				<p>Vagrant was unable to mount VirtualBox shared folders....とエラーが出る</p>
 				<p>原因はホスト(VirtualBox)とゲスト(Guest Additions)でバージョン不一致</p>
 				<p>バージョンを更新してくれるプラグインを入れてみる</p>
-				<p>まずvagrant sshしてゲストOSに入る</p>
 				<p>vagrant plugin install vagrant-vbguest</p>
 				<p>vagrant vbguest --status (確認)</p>
 				<p>vagrant vbguest (更新)</p>
 				<p>それでもダメならVirtualBoxを最新版に更新してみる</p>
+			</div><!-- .container -->
+		</section>
+		<section>
+			<div class="container">
+				<h3>※2 rails serverが上手くいかない場合</h3>
+				<p>my_app内にあるGemfileでrubyracerをコメントアウト</p>
+				<p>bundle install</p>
 			</div><!-- .container -->
 		</section>
 	</div><!-- #content -->
